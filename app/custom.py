@@ -29,10 +29,11 @@ Conventions followed:
 """
 
 import sqlite3, os, pickle, filecmp, urllib, time, sys
-from xml.dom.pulldom import parseString, START_ELEMENT
+from xml.dom.pulldom import START_ELEMENT
 from xml.sax.handler import feature_external_ges
-from xml.sax import make_parser
 from flask import flash
+import defusedxml.pulldom
+import defusedxml.sax
 
 
 path = os.path.dirname(os.path.realpath(__file__))
@@ -107,9 +108,9 @@ def xxecomment(username, request) -> None:
         request - a flask request object
     """
 
-    parser = make_parser()
+    parser = defusedxml.sax.make_parser()
     parser.setFeature(feature_external_ges, True)
-    doc = parseString(request.data.decode('utf-8'), parser=parser)
+    doc = defusedxml.pulldom.parseString(request.data.decode('utf-8'), parser=parser)
     for event, node in doc:
         if event == START_ELEMENT and node.tagName == 'text':
             doc.expandNode(node)

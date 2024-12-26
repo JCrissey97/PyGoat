@@ -28,6 +28,7 @@ Conventions followed:
 import os, yaml, sqlite3, hashlib, requests, logging
 from flask import session, redirect, flash, Response, render_template
 from lesson_handler import lesson
+from security import safe_requests
 
 
 
@@ -225,7 +226,7 @@ def send_webrequest(webrequest, request=None, url="http://localhost:5000", testi
         if webrequest['method'] == 'POST':
             requests.post(url, data=body, headers=headers)
         elif webrequest['method'] == 'GET':
-            requests.get(url, headers=headers, params=body)
+            safe_requests.get(url, headers=headers, params=body)
 
 
 

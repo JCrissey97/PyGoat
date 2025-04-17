@@ -118,7 +118,7 @@ def router(lessons: list, network: "module", path: str, app: "Flask app") -> tup
                 if hasattr(lesson, "complete_response"):
                     finalDict[lesson.name]["completeResponse"] = lesson.complete_response
 
-            return (json.dumps(finalDict))
+            return ((json.dumps(finalDict)), {'Content-Type': 'application/json'})
         else:
             return redirect(url_for("login"))
 

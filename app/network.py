@@ -223,9 +223,9 @@ def send_webrequest(webrequest, request=None, url="http://localhost:5000", testi
         return url,headers,body
     else:
         if webrequest['method'] == 'POST':
-            requests.post(url, data=body, headers=headers)
+            requests.post(url, data=body, headers=headers, timeout=60)
         elif webrequest['method'] == 'GET':
-            requests.get(url, headers=headers, params=body)
+            requests.get(url, headers=headers, params=body, timeout=60)
 
 
 
